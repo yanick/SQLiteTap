@@ -1,0 +1,7 @@
+1..4
+ok 1 - this passes
+not ok 2 - this fails
+ok 3 - lassie is darn cute
+ok 4 - spot is darn cute
+ok 5
+not ok 6

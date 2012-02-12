@@ -14,3 +14,6 @@ insert into puppies values ( 'lassie', 5 );
 insert into puppies values ( 'spot', 7 );
 
 select ok( cuteness >= 5, name || ' is darn cute' ) from puppies;
+
+select ok( 1 );
+select ok( 0 );

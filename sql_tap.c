@@ -29,14 +29,13 @@ void sql_tap_ok(
     char *verdict = result ? "ok" : "not ok";
     char *output;
 
-    int *test_counter = (int *)sqlite3_user_data(ctx);
-    (*test_counter)++;
+    test_counter++;
 
     if ( comment ) {
         comment = sqlite3_mprintf( " - %s", comment );
     }
 
-    output = sqlite3_mprintf( "%s %d%s", verdict, *test_counter, comment );
+    output = sqlite3_mprintf( "%s %d%s", verdict, test_counter, comment );
 
     sqlite3_result_text( ctx, output, strlen(output), NULL );
 }
@@ -68,11 +67,9 @@ static void sql_tap_ok_without_desc(
 int sqlite3_extension_init( sqlite3 *db, char **error, const sqlite3_api_routines *api ) {
     SQLITE_EXTENSION_INIT2(api);
 
-    int test_counter = 0;  /* bound to change into a struct */
-
     sqlite3_create_function( db, "plan", 1, SQLITE_UTF8, NULL, sql_tap_plan, NULL, NULL );
-    sqlite3_create_function( db, "ok", 2, SQLITE_UTF8, &test_counter, sql_tap_ok_with_desc, NULL, NULL );
-    sqlite3_create_function( db, "ok", 1, SQLITE_UTF8, &test_counter, sql_tap_ok_without_desc, NULL, NULL );
+    sqlite3_create_function( db, "ok", 2, SQLITE_UTF8, NULL, sql_tap_ok_with_desc, NULL, NULL );
+    sqlite3_create_function( db, "ok", 1, SQLITE_UTF8, NULL, sql_tap_ok_without_desc, NULL, NULL );
 
     return SQLITE_OK;
 }

@@ -5,7 +5,8 @@ sql_tap.o: sql_tap.c
 	gcc -c -fPIC sql_tap.c
 
 test: sqlitetap
-	sqlite3 < test.sql
+	sqlite3 < test.sql > test.output
+	diff test.output test.expected
 
 
 
